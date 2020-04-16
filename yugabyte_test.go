@@ -35,7 +35,7 @@ func FindStringInResponse(statusCode int, body string) bool {
 func TestYugaByteAwsTerraform(t *testing.T) {
 	t.Parallel()
 
-	yugabyteDir := test_structure.CopyTerraformFolderToTemp(t, "./", "./terraform-aws-yugabyte")
+	yugabyteDir := test_structure.CopyTerraformFolderToTemp(t, "..", "../terraform-aws-yugabyte")
 	maxRetries := 10
 	timeBetweenRetries := 5 * time.Second
 
