@@ -90,7 +90,7 @@ func TestYugaByteAwsTerraform(t *testing.T) {
 
 
 func configureTerraformOptions(t *testing.T, yugabyteDir string) (*terraform.Options, *aws.Ec2Keypair) {
-	awsRegion = os.Getenv("REGION")
+	awsRegion = "us-east-1"//os.Getenv("REGION")
 	clusterName := strings.ToLower(randomdata.FirstName(randomdata.Male))
 	uniqueID := random.UniqueId()
 	sshKeyPair := fmt.Sprintf("terratest-example-%s", uniqueID)
