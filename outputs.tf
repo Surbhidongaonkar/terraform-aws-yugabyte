@@ -17,12 +17,12 @@ output "tserver-ui" {
 
 output "hostname" {
   sensitive = false
-  value     = ["${aws_instance.yugabyte_nodes.*.public_ip}"]
+  value     = "${aws_instance.yugabyte_nodes.*.public_ip}"
 }
 
 output "ip" {
   sensitive = false
-  value     = ["${aws_instance.yugabyte_nodes.*.private_ip}"]
+  value     = "${aws_instance.yugabyte_nodes.*.private_ip}"
 }
 
 output "security_group" {
