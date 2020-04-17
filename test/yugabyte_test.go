@@ -101,8 +101,8 @@ func configureTerraformOptions(t *testing.T, yugabyteDir string) (*terraform.Opt
 		t.Fatalf("Failed to save key to %s: %v", RemoteDir, err)
 	}
 	vpcID := os.Getenv("VPC_ID")
-	availabilityZones := []string{os.Getenv("AVAILABILITY_ZONES")}//{"us-east-1a"}
-	subnetID := []string{os.Getenv("SUBNNET_IDS")}//{"subnet-0c2e005c746703036"}
+	availabilityZones := strings.Split(os.Getenv("AVAILABILITY_ZONES"), ",")
+	subnetID := strings.Split(os.Getenv("SUBNET_IDS"), ",")
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: yugabyteDir,
