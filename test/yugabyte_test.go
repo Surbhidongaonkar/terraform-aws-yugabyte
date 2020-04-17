@@ -36,7 +36,7 @@ func TestYugaByteAwsTerraform(t *testing.T) {
 	t.Parallel()
 
 	yugabyteDir := test_structure.CopyTerraformFolderToTemp(t, "..", "../terraform-aws-yugabyte")
-	maxRetries := 10
+	maxRetries := 30
 	timeBetweenRetries := 5 * time.Second
 
 	defer test_structure.RunTestStage(t, "teardown", func() {
@@ -65,12 +65,12 @@ func TestYugaByteAwsTerraform(t *testing.T) {
 		testYugaByteTserverURL(t, terraformOptions, maxRetries, timeBetweenRetries)
 
 		for _, host := range YugaByteHosts {
-			//fmt.Printf("Yugabyte host:"+host)
+			fmt.Printf("type of host is %T", host)
 			host = strings.Trim(host, "\"\",")
 			logger.Logf(t, "Host is :- %s", host)
 
-			//todo:check if condition and testYugaByteDirectory func
-			 if strings.Contains(host, "."){
+			//todo:check if condition 
+			// if strings.Contains(host, "."){
 			 	testYugaByteSSH(t, terraformOptions, maxRetries, timeBetweenRetries, sshUser, EC2Key, host)
 				//testYugaByteDirectory(t, terraformOptions, maxRetries, timeBetweenRetries, sshUser, EC2Key, host)
 			 	testYugaByteYSQLSH(t, terraformOptions, maxRetries, timeBetweenRetries, sshUser, EC2Key, host)
@@ -80,7 +80,7 @@ func TestYugaByteAwsTerraform(t *testing.T) {
 				testYugaByteMasterProcess(t, terraformOptions, maxRetries, timeBetweenRetries, sshUser, EC2Key, host)
 			 	testYugaByteMasterLog(t, terraformOptions, maxRetries, timeBetweenRetries, sshUser, EC2Key, host)
 			 	testYugaByteTserverLog(t, terraformOptions, maxRetries, timeBetweenRetries, sshUser, EC2Key, host)
-			 }
+			 //}
 		}
 
 	})
@@ -88,7 +88,7 @@ func TestYugaByteAwsTerraform(t *testing.T) {
 
 
 func configureTerraformOptions(t *testing.T, yugabyteDir string) (*terraform.Options, *aws.Ec2Keypair) {
-	awsRegion = "us-east-1"//os.Getenv("REGION")
+	awsRegion = os.Getenv("REGION")
 	clusterName := strings.ToLower(randomdata.FirstName(randomdata.Male))
 	uniqueID := random.UniqueId()
 	sshKeyPair := fmt.Sprintf("terratest-example-%s", uniqueID)
