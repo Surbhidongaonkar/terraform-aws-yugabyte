@@ -61,8 +61,6 @@ func TestYugaByteAwsTerraform(t *testing.T) {
 		YugaByteHosts := strings.Fields(strings.Trim(hosts, "[]\"\""))
 		sshUser:= terraform.Output(t, terraformOptions, "ssh_user")
 		//Test master and tserver UI
-		fmt.Print("YugabyteHosts............................................")
-		fmt.Print(YugaByteHosts)
 		testYugaByteMasterURL(t, terraformOptions, maxRetries, timeBetweenRetries)
 		testYugaByteTserverURL(t, terraformOptions, maxRetries, timeBetweenRetries)
 
@@ -103,8 +101,8 @@ func configureTerraformOptions(t *testing.T, yugabyteDir string) (*terraform.Opt
 		t.Fatalf("Failed to save key to %s: %v", RemoteDir, err)
 	}
 	vpcID := os.Getenv("VPC_ID")
-	availabilityZones := []string{"us-east-1a"}
-	subnetID := []string{"subnet-0c2e005c746703036"}
+	availabilityZones := []string{os.Getenv("AVAILABILITY_ZONES")}//{"us-east-1a"}
+	subnetID := []string{os.Getenv("SUBNNET_IDS")}//{"subnet-0c2e005c746703036"}
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: yugabyteDir,
