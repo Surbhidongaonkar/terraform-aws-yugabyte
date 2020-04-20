@@ -90,7 +90,8 @@ func TestYugaByteAwsTerraform(t *testing.T) {
 func configureTerraformOptions(t *testing.T, yugabyteDir string) (*terraform.Options, *aws.Ec2Keypair) {
 	awsRegion = os.Getenv("AWS_REGION")
 	clusterName := strings.ToLower(randomdata.FirstName(randomdata.Male))
-	uniqueID := random.UniqueId()
+	uniqueID := os.Getenv("GITHUB_RUN_ID")//random.UniqueId()
+	fmt.Print(">>>>>>>>>>>>>>>>>>>>>>>>>"+uniqueID+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 	sshKeyPair := fmt.Sprintf("terratest-example-%s", uniqueID)
 	EC2Key := aws.CreateAndImportEC2KeyPair(t, awsRegion, sshKeyPair)
 	PrivateKey:= []byte(EC2Key.KeyPair.PrivateKey)
